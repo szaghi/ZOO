@@ -117,7 +117,9 @@ This command will populate the `src` directory with the latest master version of
 
 #### Build libraries
 
-##### Compiler Support [![Compiler](https://img.shields.io/badge/GNU-v6.3.1+-brightgreen.svg)]()
+##### Compiler Support
+
+[![Compiler](https://img.shields.io/badge/GNU-v6.3.1+-brightgreen.svg)]()
 
 The main compiler used to develop this Fortran libraries collection is GNU Fortran compiler. In particular, supported versions are v6.3.1 or higher (preferable 7+).
 
