@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# File:        collection_update.sh
+# File:        zoo_update.sh
 #
 # Description: Update ZOO by means of fresh git clone of GitHub repositories
 #

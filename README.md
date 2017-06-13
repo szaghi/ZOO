@@ -49,6 +49,13 @@ These *pets* are developed by me and other enthusiast Fortraners.
 
 Please, read the documentation of each library contained into their own repository: here no documentation is shipped.
 
+##### One ring to rule them all
+A centralized module exposing **all pets** is also provided, i.e. [zoo.f90](https://github.com/szaghi/ZOO/tree/master/src/zoo.f90), see install section for more details.
+
+##### Note on updates
+
+The ZOO provides always a *recent master* branch version of each library: ZOO is itself updated quite often. Anyhow, local ZOOs can be updated by the end-user by means of the provided `zoo_update.sh` script, see install section for more details.
+
 Go to [Top](#top)
 
 ### Copyrights
