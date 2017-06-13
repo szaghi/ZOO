@@ -13,7 +13,7 @@
 
 ---
 
-| [What is ZOO?](#what-is-zoo) | [Copyrights](#copyrights) | [Install ZOO pets](#install_zoo_pets) |
+| [What is ZOO?](#what-is-zoo) | [Copyrights](#copyrights) | [Install ZOO pets](#install-zoo-pets) |
 
 ---
 
