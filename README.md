@@ -35,8 +35,8 @@ The ZOO is currently hosting (with love):
 + [FITTER](https://github.com/szaghi/FITTER), Fortran tIc Toc Timer
 + [forbear](https://github.com/szaghi/forbear), Fortran (progress) B(e)ar envinronment
 + [FORESEER](https://github.com/szaghi/FORESEER), FOrtran RiEmann SolveErs EnviRonment
-+ [FURY](https://github.com/szaghi/FURY), Fortran Units (environment) for Reliable phYsical math
-+ [MORTIF](https://github.com/szaghi/MORTIF), MORTon Indexer (Z-order) Fortran environment
++ :heavy_exclamation_mark: [FURY](https://github.com/szaghi/FURY), Fortran Units (environment) for Reliable phYsical math (**issued**)
++ :heavy_exclamation_mark: [MORTIF](https://github.com/szaghi/MORTIF), MORTon Indexer (Z-order) Fortran environment (**issued**)
 + [PENF](https://github.com/szaghi/PENF), Portability Environment for Fortran poor people
 + [StringiFor](https://github.com/szaghi/StringiFor), Strings Fortran Manipulator with steroids
 + [VecFor](https://github.com/szaghi/VecFor), Vector algebra class for Fortran poor people
@@ -121,19 +121,81 @@ This command will populate the `src` directory with the latest master version of
 
 The main compiler used to develop this Fortran libraries collection is GNU Fortran compiler. In particular, supported versions are v6.3.1 or higher (preferable 7+).
 
-##### Build a library
+#### Using (GNU) Make
 
-To be written.
+For each library a *simple*, plain, old makefile is provided. Use them as following
+
+```shell
+make -f makefile.$library # substutite "$library" with a library name, i.e. "befor64", "face", "flap", etc... (lower case)
+
+# e.g.
+make -f makefile.penf
+```
+
+After this command you will have the (statically) compiled library into `static/` subdirectory in the ZOO root. In the same subdirectory there is also `static/mod/` which contains the compiled `.mod` files, e.g:
+
+```shell
+tree -L 2 static/
+static/
+├── libbefor64.a
+├── ...
+├── libwenoof.a
+├── mod
+│   ├── befor64.mod
+│   ├── ...
+│   └── wenoof_weights_rec_js.mod
+└── obj
+    ├── befor64.o
+    ├── ...
+    └── wenoof_weights_rec_js.o
+```
 
 ##### Build all library
 
-To be written.
+A global makefile is provided to build all libraries with one command:
+
+```shell
+make -f makefile
+# or simply
+make
+```
 
 ##### Build ZOO library
 
 > One ring to rule them all.
 
 To be completed.
+
+#### Using FoBiS
+
+The users of [FoBiS](https://github.com/szaghi/FoBiS) (are still there?) have a simple fobos for doing all:
+
+```shell
+FoBiS.py build -mode [static|shared]-gnu -t src/path_to/$library.[F|f]90 -o lib$library.[a|so] # substutite "$library" with a library name, i.e. "befor64", "face", "flap", etc... (lower case)
+
+# e.g.
+FoBiS.py build -mode static-gnu -t src/BeFoR64/befor64.F90 -o libbefor64.a
+```
+
+Note that FoBiS allows also shared libraries building, not only static as Make approach.
+
+The compiled libraries are placed in the same tree as the Make approach.
+
+##### Build all library
+
+```shell
+FoBiS.py rule -ex makeall
+```
+
+##### Build ZOO library
+
+> One ring to rule them all.
+
+```shell
+FoBiS.py build -mode [static|shared]-gnu-zoo
+```
+
+This will create the **monster** library `libzoo.[a|so]` that exposes of the *ZOO's Wild Pets*.
 
 Go to [Top](#top)
 
@@ -144,3 +206,5 @@ Go to [Top](#top)
 > Why this project is named **ZOO**?
 
 Aside it being another of my bad acronyms, this is really a ZOO: there is library for simple-stupid task like to colorize terminal output and a library for challenging task like the integration of general non linear ODE. Like a real ZOO, here you can find animals of any size, from *small birds* to *huge elephants*.
+
+Go to [Top](#top)

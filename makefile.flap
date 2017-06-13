@@ -1,0 +1,110 @@
+#!/usr/bin/make
+
+#defaults
+LIB = flap
+
+#main building variables
+DOBJ    = static/obj/
+DMOD    = static/mod/
+DEXE    = static/
+MAKELIB = ar -rcs $(DEXE)lib$(LIB).a $(DOBJ)*.o ; ranlib $(DEXE)lib$(LIB).a
+DSRC    = src
+FC      = gfortran
+OPTSC   = -cpp -c -frealloc-lhs -O3 -J static/mod
+OPTSL   = -J static/mod
+VPATH   = $(DSRC) $(DOBJ) $(DMOD)
+MKDIRS  = $(DOBJ) $(DMOD) $(DEXE)
+
+#auxiliary variables
+COTEXT  = "Compiling $(<F)"
+LITEXT  = "Assembling $@"
+
+#building rule
+$(LIB): $(MKDIRS) $(DOBJ)$(LIB).o
+	@echo $(LITEXT)
+	@$(MAKELIB)
+
+#compiling rules
+$(DOBJ)flap_command_line_interface_t.o: src/FLAP/flap_command_line_interface_t.F90 \
+	$(DOBJ)face.o \
+	$(DOBJ)flap_command_line_argument_t.o \
+	$(DOBJ)flap_command_line_arguments_group_t.o \
+	$(DOBJ)flap_object_t.o \
+	$(DOBJ)flap_utils_m.o \
+	$(DOBJ)penf.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)flap_command_line_arguments_group_t.o: src/FLAP/flap_command_line_arguments_group_t.f90 \
+	$(DOBJ)face.o \
+	$(DOBJ)flap_command_line_argument_t.o \
+	$(DOBJ)flap_object_t.o \
+	$(DOBJ)penf.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)flap_utils_m.o: src/FLAP/flap_utils_m.f90 \
+	$(DOBJ)penf.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)flap_command_line_argument_t.o: src/FLAP/flap_command_line_argument_t.F90 \
+	$(DOBJ)face.o \
+	$(DOBJ)flap_object_t.o \
+	$(DOBJ)flap_utils_m.o \
+	$(DOBJ)penf.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)flap_object_t.o: src/FLAP/flap_object_t.f90 \
+	$(DOBJ)penf.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)flap.o: src/FLAP/flap.f90 \
+	$(DOBJ)flap_command_line_argument_t.o \
+	$(DOBJ)flap_command_line_arguments_group_t.o \
+	$(DOBJ)flap_command_line_interface_t.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)face.o: src/FACE/face.F90
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)penf.o: src/PENF/penf.F90 \
+	$(DOBJ)penf_global_parameters_variables.o \
+	$(DOBJ)penf_b_size.o \
+	$(DOBJ)penf_stringify.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)penf_global_parameters_variables.o: src/PENF/penf_global_parameters_variables.F90
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)penf_b_size.o: src/PENF/penf_b_size.F90 \
+	$(DOBJ)penf_global_parameters_variables.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)penf_stringify.o: src/PENF/penf_stringify.F90 \
+	$(DOBJ)penf_b_size.o \
+	$(DOBJ)penf_global_parameters_variables.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+#phony auxiliary rules
+.PHONY : $(MKDIRS)
+$(MKDIRS):
+	@mkdir -p $@
+.PHONY : cleanobj
+cleanobj:
+	@echo deleting objects
+	@rm -fr $(DOBJ)
+.PHONY : cleanmod
+cleanmod:
+	@echo deleting mods
+	@rm -fr $(DMOD)
+.PHONY : clean
+clean: cleanobj cleanmod

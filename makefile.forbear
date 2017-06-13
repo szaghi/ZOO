@@ -1,0 +1,67 @@
+#!/usr/bin/make
+
+#defaults
+LIB = forbear
+
+#main building variables
+DOBJ    = static/obj/
+DMOD    = static/mod/
+DEXE    = static/
+MAKELIB = ar -rcs $(DEXE)lib$(LIB).a $(DOBJ)*.o ; ranlib $(DEXE)lib$(LIB).a
+DSRC    = src
+FC      = gfortran
+OPTSC   = -cpp -c -frealloc-lhs -O3 -J static/mod
+OPTSL   = -J static/mod
+VPATH   = $(DSRC) $(DOBJ) $(DMOD)
+MKDIRS  = $(DOBJ) $(DMOD) $(DEXE)
+
+#auxiliary variables
+COTEXT  = "Compiling $(<F)"
+LITEXT  = "Assembling $@"
+
+#building rule
+$(LIB): $(MKDIRS) $(DOBJ)$(LIB).o
+	@echo $(LITEXT)
+	@$(MAKELIB)
+
+#compiling rules
+$(DOBJ)forbear_bar_object.o: src/forbear/forbear_bar_object.F90 \
+	$(DOBJ)forbear_element_object.o \
+	$(DOBJ)forbear_kinds.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)forbear_element_object.o: src/forbear/forbear_element_object.F90 \
+	$(DOBJ)face.o \
+	$(DOBJ)forbear_kinds.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)forbear.o: src/forbear/forbear.f90 \
+	$(DOBJ)forbear_bar_object.o \
+	$(DOBJ)forbear_kinds.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)forbear_kinds.o: src/forbear/forbear_kinds.F90
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)face.o: src/FACE/face.F90
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+#phony auxiliary rules
+.PHONY : $(MKDIRS)
+$(MKDIRS):
+	@mkdir -p $@
+.PHONY : cleanobj
+cleanobj:
+	@echo deleting objects
+	@rm -fr $(DOBJ)
+.PHONY : cleanmod
+cleanmod:
+	@echo deleting mods
+	@rm -fr $(DMOD)
+.PHONY : clean
+clean: cleanobj cleanmod

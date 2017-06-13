@@ -1,5 +1,6 @@
 [modes]
 modes = shared-gnu static-gnu shared-gnu-debug static-gnu-debug
+        shared-gnu-zoo static-gnu-zoo shared-gnu-debug-zoo static-gnu-debug-zoo
 
 [common-variables]
 $CSHARED_GNU = -cpp -c -fPIC -frealloc-lhs
@@ -8,30 +9,50 @@ $CSTATIC_GNU = -cpp -c -frealloc-lhs
 $DEBUG_GNU   = -O0 -g3 -Warray-bounds -Wcharacter-truncation -Wline-truncation -Wimplicit-interface -Wimplicit-procedure -Wunderflow -fcheck=all -fmodule-private -ffree-line-length-132 -fimplicit-none -fbacktrace -fdump-core -finit-real=nan -std=f2008 -fall-intrinsics
 $OPTIMIZE    = -O3
 
-# main modes
-# GNU
+# generic
 [shared-gnu]
+template  = template-shared-gnu
+build_dir = ./shared/
+mklib     = shared
+
+[static-gnu]
+template  = template-static-gnu
+build_dir = ./static/
+mklib     = static
+
+[shared-gnu-debug]
+template  = template-shared-gnu-debug
+build_dir = ./shared/
+mklib     = shared
+
+[static-gnu-debug]
+template  = template-static-gnu-debug
+build_dir = ./static/
+mklib     = static
+
+# ZOO
+[shared-gnu-zoo]
 template  = template-shared-gnu
 target    = zoo.f90
 build_dir = ./shared/
 output    = libzoo.so
 mklib     = shared
 
-[static-gnu]
+[static-gnu-zoo]
 template  = template-static-gnu
 target    = zoo.f90
 build_dir = ./static/
 output    = libzoo.a
 mklib     = static
 
-[shared-gnu-debug]
+[shared-gnu-debug-zoo]
 template  = template-shared-gnu-debug
 target    = zoo.f90
 build_dir = ./shared/
 output    = libzoo.so
 mklib     = shared
 
-[static-gnu-debug]
+[static-gnu-debug-zoo]
 template  = template-static-gnu-debug
 target    = zoo.f90
 build_dir = ./static/
@@ -49,7 +70,7 @@ src      = ./src/
 colors   = True
 quiet    = False
 log      = True
-jobs     = 2
+jobs     = 10
 
 [template-static-gnu]
 compiler = gnu
@@ -60,7 +81,7 @@ src      = ./src/
 colors   = True
 quiet    = False
 log      = True
-jobs     = 2
+jobs     = 10
 
 [template-shared-gnu-debug]
 compiler = gnu
@@ -72,7 +93,7 @@ src      = ./src/
 colors   = True
 quiet    = False
 log      = True
-jobs     = 2
+jobs     = 10
 
 [template-static-gnu-debug]
 compiler = gnu
@@ -84,4 +105,24 @@ src      = ./src/
 colors   = True
 quiet    = False
 log      = True
-jobs     = 2
+jobs     = 10
+
+#rules
+[rule-makeall]
+help   = make all libraries
+rule_1  = FoBiS.py build -mode static-gnu -t src/BeFoR64/befor64.F90 -o libbefor64.a
+rule_2  = FoBiS.py build -mode static-gnu -t src/FACE/face.F90 -o libface.a
+rule_3  = FoBiS.py build -mode static-gnu -t src/FiNeR/finer.f90 -o libfiner.a
+rule_4  = FoBiS.py build -mode static-gnu -t src/FITTER/fitter.f90 -o libfitter.a
+rule_5  = FoBiS.py build -mode static-gnu -t src/FLAP/flap.f90 -o libflap.a
+rule_6  = FoBiS.py build -mode static-gnu -t src/FLOw/flow.f90 -o libflow.a
+rule_7  = FoBiS.py build -mode static-gnu -t src/FOODIE/foodie.f90 -o libfoodie.a
+rule_8  = FoBiS.py build -mode static-gnu -t src/forbear/forbear.f90 -o libforbear.a
+rule_9  = FoBiS.py build -mode static-gnu -t src/FORESEER/foreseer.f90 -o libforeseer.a
+rule_10 = FoBiS.py build -mode static-gnu -t src/FoXy/foxy.f90 -o libfoxy.a
+rule_11 = FoBiS.py build -mode static-gnu -t src/PENF/penf.F90 -o libpenf.a
+rule_12 = FoBiS.py build -mode static-gnu -t src/StringiFor/stringifor.F90 -o libstringifor.a
+rule_13 = FoBiS.py build -mode static-gnu -t src/VecFor/vecfor.F90 -o libvecfor.a
+rule_14 = FoBiS.py build -mode static-gnu -t src/VTKFortran/vtk_fortran.f90 -o libvtkfortran.a
+rule_15 = FoBiS.py build -mode static-gnu -t src/WenOOF/wenoof.F90 -o libwenoof.a
+

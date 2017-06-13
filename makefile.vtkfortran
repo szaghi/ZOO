@@ -1,0 +1,183 @@
+#!/usr/bin/make
+
+#defaults
+LIB = vtkfortran
+
+#main building variables
+DOBJ    = static/obj/
+DMOD    = static/mod/
+DEXE    = static/
+MAKELIB = ar -rcs $(DEXE)lib$(LIB).a $(DOBJ)*.o ; ranlib $(DEXE)lib$(LIB).a
+DSRC    = src
+FC      = gfortran
+OPTSC   = -cpp -c -frealloc-lhs -O3 -J static/mod
+OPTSL   = -J static/mod
+VPATH   = $(DSRC) $(DOBJ) $(DMOD)
+MKDIRS  = $(DOBJ) $(DMOD) $(DEXE)
+
+#auxiliary variables
+COTEXT  = "Compiling $(<F)"
+LITEXT  = "Assembling $@"
+
+#building rule
+$(LIB): $(MKDIRS) $(DOBJ)$(LIB).o
+	@echo $(LITEXT)
+	@$(MAKELIB)
+
+#compiling rules
+$(DOBJ)vtkfortran.o: src/VTKFortran/vtk_fortran.f90 \
+	$(DOBJ)vtk_fortran_pvtk_file.o \
+	$(DOBJ)vtk_fortran_vtk_file.o \
+	$(DOBJ)vtk_fortran_vtm_file.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)vtk_fortran_vtm_file.o: src/VTKFortran/vtk_fortran_vtm_file.F90 \
+	$(DOBJ)befor64.o \
+	$(DOBJ)penf.o \
+	$(DOBJ)vtk_fortran_vtk_file_xml_writer_abstract.o \
+	$(DOBJ)vtk_fortran_vtk_file_xml_writer_ascii_local.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)vtk_fortran_vtk_file_xml_writer_ascii_local.o: src/VTKFortran/vtk_fortran_vtk_file_xml_writer_ascii_local.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)stringifor.o \
+	$(DOBJ)vtk_fortran_dataarray_encoder.o \
+	$(DOBJ)vtk_fortran_vtk_file_xml_writer_abstract.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)vtk_fortran_dataarray_encoder.o: src/VTKFortran/vtk_fortran_dataarray_encoder.f90 \
+	$(DOBJ)befor64.o \
+	$(DOBJ)penf.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)vtk_fortran_pvtk_file.o: src/VTKFortran/vtk_fortran_pvtk_file.f90 \
+	$(DOBJ)befor64.o \
+	$(DOBJ)penf.o \
+	$(DOBJ)vtk_fortran_vtk_file_xml_writer_abstract.o \
+	$(DOBJ)vtk_fortran_vtk_file_xml_writer_ascii_local.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)vtk_fortran_vtk_file_xml_writer_binary_local.o: src/VTKFortran/vtk_fortran_vtk_file_xml_writer_binary_local.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)stringifor.o \
+	$(DOBJ)vtk_fortran_dataarray_encoder.o \
+	$(DOBJ)vtk_fortran_vtk_file_xml_writer_abstract.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)vtk_fortran_vtk_file_xml_writer_abstract.o: src/VTKFortran/vtk_fortran_vtk_file_xml_writer_abstract.f90 \
+	$(DOBJ)foxy.o \
+	$(DOBJ)penf.o \
+	$(DOBJ)stringifor.o \
+	$(DOBJ)vtk_fortran_parameters.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)vtk_fortran_vtk_file_xml_writer_appended.o: src/VTKFortran/vtk_fortran_vtk_file_xml_writer_appended.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)stringifor.o \
+	$(DOBJ)vtk_fortran_dataarray_encoder.o \
+	$(DOBJ)vtk_fortran_parameters.o \
+	$(DOBJ)vtk_fortran_vtk_file_xml_writer_abstract.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)vtk_fortran_vtk_file.o: src/VTKFortran/vtk_fortran_vtk_file.f90 \
+	$(DOBJ)befor64.o \
+	$(DOBJ)penf.o \
+	$(DOBJ)stringifor.o \
+	$(DOBJ)vtk_fortran_vtk_file_xml_writer_abstract.o \
+	$(DOBJ)vtk_fortran_vtk_file_xml_writer_appended.o \
+	$(DOBJ)vtk_fortran_vtk_file_xml_writer_ascii_local.o \
+	$(DOBJ)vtk_fortran_vtk_file_xml_writer_binary_local.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)vtk_fortran_parameters.o: src/VTKFortran/vtk_fortran_parameters.f90 \
+	$(DOBJ)penf.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)penf.o: src/PENF/penf.F90 \
+	$(DOBJ)penf_global_parameters_variables.o \
+	$(DOBJ)penf_b_size.o \
+	$(DOBJ)penf_stringify.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)penf_global_parameters_variables.o: src/PENF/penf_global_parameters_variables.F90
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)penf_b_size.o: src/PENF/penf_b_size.F90 \
+	$(DOBJ)penf_global_parameters_variables.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)penf_stringify.o: src/PENF/penf_stringify.F90 \
+	$(DOBJ)penf_b_size.o \
+	$(DOBJ)penf_global_parameters_variables.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)befor64_pack_data_m.o: src/BeFoR64/befor64_pack_data_m.F90 \
+	$(DOBJ)penf.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)befor64.o: src/BeFoR64/befor64.F90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)befor64_pack_data_m.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)stringifor.o: src/StringiFor/stringifor.F90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)stringifor_string_t.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)stringifor_string_t.o: src/StringiFor/stringifor_string_t.F90 \
+	$(DOBJ)befor64.o \
+	$(DOBJ)penf.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)foxy_xml_file.o: src/FoXy/foxy_xml_file.f90 \
+	$(DOBJ)foxy_xml_tag.o \
+	$(DOBJ)penf.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)foxy_xml_tag.o: src/FoXy/foxy_xml_tag.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)stringifor.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)foxy.o: src/FoXy/foxy.f90 \
+	$(DOBJ)foxy_xml_file.o \
+	$(DOBJ)foxy_xml_tag.o \
+	$(DOBJ)penf.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+#phony auxiliary rules
+.PHONY : $(MKDIRS)
+$(MKDIRS):
+	@mkdir -p $@
+.PHONY : cleanobj
+cleanobj:
+	@echo deleting objects
+	@rm -fr $(DOBJ)
+.PHONY : cleanmod
+cleanmod:
+	@echo deleting mods
+	@rm -fr $(DMOD)
+.PHONY : clean
+clean: cleanobj cleanmod

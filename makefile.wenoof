@@ -1,0 +1,329 @@
+#!/usr/bin/make
+
+#defaults
+LIB = wenoof
+
+#main building variables
+DOBJ    = static/obj/
+DMOD    = static/mod/
+DEXE    = static/
+MAKELIB = ar -rcs $(DEXE)lib$(LIB).a $(DOBJ)*.o ; ranlib $(DEXE)lib$(LIB).a
+DSRC    = src
+FC      = gfortran
+OPTSC   = -cpp -c -frealloc-lhs -O3 -J static/mod
+OPTSL   = -J static/mod
+VPATH   = $(DSRC) $(DOBJ) $(DMOD)
+MKDIRS  = $(DOBJ) $(DMOD) $(DEXE)
+
+#auxiliary variables
+COTEXT  = "Compiling $(<F)"
+LITEXT  = "Assembling $@"
+
+#building rule
+$(LIB): $(MKDIRS) $(DOBJ)$(LIB).o
+	@echo $(LITEXT)
+	@$(MAKELIB)
+
+#compiling rules
+$(DOBJ)wenoof.o: src/WenOOF/wenoof.F90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_interpolator_object.o \
+	$(DOBJ)wenoof_objects_factory.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_base_object.o: src/WenOOF/abstract_objects/wenoof_base_object.f90 \
+	$(DOBJ)penf.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_beta_object.o: src/WenOOF/abstract_objects/wenoof_beta_object.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_base_object.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_alpha_object.o: src/WenOOF/abstract_objects/wenoof_alpha_object.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_base_object.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_weights_object.o: src/WenOOF/abstract_objects/wenoof_weights_object.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_base_object.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_interpolator_object.o: src/WenOOF/abstract_objects/wenoof_interpolator_object.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_base_object.o \
+	$(DOBJ)wenoof_interpolations_object.o \
+	$(DOBJ)wenoof_weights_object.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_interpolations_object.o: src/WenOOF/abstract_objects/wenoof_interpolations_object.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_base_object.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_kappa_object.o: src/WenOOF/abstract_objects/wenoof_kappa_object.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_base_object.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_alpha_rec_m.o: src/WenOOF/concrete_objects/wenoof_alpha_rec_m.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_alpha_object.o \
+	$(DOBJ)wenoof_alpha_rec_js.o \
+	$(DOBJ)wenoof_alpha_rec_z.o \
+	$(DOBJ)wenoof_base_object.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_weights_int_js.o: src/WenOOF/concrete_objects/wenoof_weights_int_js.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_alpha_factory.o \
+	$(DOBJ)wenoof_alpha_object.o \
+	$(DOBJ)wenoof_base_object.o \
+	$(DOBJ)wenoof_beta_factory.o \
+	$(DOBJ)wenoof_beta_object.o \
+	$(DOBJ)wenoof_kappa_factory.o \
+	$(DOBJ)wenoof_kappa_int_js.o \
+	$(DOBJ)wenoof_kappa_object.o \
+	$(DOBJ)wenoof_weights_object.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_interpolations_int_js.o: src/WenOOF/concrete_objects/wenoof_interpolations_int_js.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_base_object.o \
+	$(DOBJ)wenoof_interpolations_object.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_beta_rec_js.o: src/WenOOF/concrete_objects/wenoof_beta_rec_js.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_base_object.o \
+	$(DOBJ)wenoof_beta_object.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_alpha_rec_js.o: src/WenOOF/concrete_objects/wenoof_alpha_rec_js.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_alpha_object.o \
+	$(DOBJ)wenoof_base_object.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_reconstructor_js.o: src/WenOOF/concrete_objects/wenoof_reconstructor_js.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_base_object.o \
+	$(DOBJ)wenoof_interpolations_factory.o \
+	$(DOBJ)wenoof_interpolations_object.o \
+	$(DOBJ)wenoof_interpolator_object.o \
+	$(DOBJ)wenoof_weights_factory.o \
+	$(DOBJ)wenoof_weights_object.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_kappa_rec_js.o: src/WenOOF/concrete_objects/wenoof_kappa_rec_js.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_base_object.o \
+	$(DOBJ)wenoof_kappa_object.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_alpha_int_m.o: src/WenOOF/concrete_objects/wenoof_alpha_int_m.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_alpha_object.o \
+	$(DOBJ)wenoof_alpha_rec_js.o \
+	$(DOBJ)wenoof_alpha_rec_z.o \
+	$(DOBJ)wenoof_base_object.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_weights_rec_js.o: src/WenOOF/concrete_objects/wenoof_weights_rec_js.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_alpha_factory.o \
+	$(DOBJ)wenoof_alpha_object.o \
+	$(DOBJ)wenoof_base_object.o \
+	$(DOBJ)wenoof_beta_factory.o \
+	$(DOBJ)wenoof_beta_object.o \
+	$(DOBJ)wenoof_kappa_factory.o \
+	$(DOBJ)wenoof_kappa_object.o \
+	$(DOBJ)wenoof_kappa_rec_js.o \
+	$(DOBJ)wenoof_weights_object.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_alpha_rec_z.o: src/WenOOF/concrete_objects/wenoof_alpha_rec_z.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_alpha_object.o \
+	$(DOBJ)wenoof_base_object.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_interpolations_rec_js.o: src/WenOOF/concrete_objects/wenoof_interpolations_rec_js.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_base_object.o \
+	$(DOBJ)wenoof_interpolations_object.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_alpha_int_z.o: src/WenOOF/concrete_objects/wenoof_alpha_int_z.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_alpha_object.o \
+	$(DOBJ)wenoof_base_object.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_interpolator_js.o: src/WenOOF/concrete_objects/wenoof_interpolator_js.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_base_object.o \
+	$(DOBJ)wenoof_interpolations_factory.o \
+	$(DOBJ)wenoof_interpolations_object.o \
+	$(DOBJ)wenoof_interpolator_object.o \
+	$(DOBJ)wenoof_weights_factory.o \
+	$(DOBJ)wenoof_weights_object.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_kappa_int_js.o: src/WenOOF/concrete_objects/wenoof_kappa_int_js.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_base_object.o \
+	$(DOBJ)wenoof_interpolations_factory.o \
+	$(DOBJ)wenoof_interpolations_object.o \
+	$(DOBJ)wenoof_interpolations_int_js.o \
+	$(DOBJ)wenoof_kappa_object.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_beta_int_js.o: src/WenOOF/concrete_objects/wenoof_beta_int_js.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_base_object.o \
+	$(DOBJ)wenoof_beta_object.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_alpha_int_js.o: src/WenOOF/concrete_objects/wenoof_alpha_int_js.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_alpha_object.o \
+	$(DOBJ)wenoof_base_object.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_kappa_factory.o: src/WenOOF/factories/wenoof_kappa_factory.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_interpolations_object.o \
+	$(DOBJ)wenoof_kappa_object.o \
+	$(DOBJ)wenoof_kappa_rec_js.o \
+	$(DOBJ)wenoof_kappa_int_js.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_weights_factory.o: src/WenOOF/factories/wenoof_weights_factory.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_alpha_object.o \
+	$(DOBJ)wenoof_beta_object.o \
+	$(DOBJ)wenoof_kappa_object.o \
+	$(DOBJ)wenoof_weights_object.o \
+	$(DOBJ)wenoof_weights_int_js.o \
+	$(DOBJ)wenoof_weights_rec_js.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_interpolator_factory.o: src/WenOOF/factories/wenoof_interpolator_factory.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_interpolations_object.o \
+	$(DOBJ)wenoof_interpolator_object.o \
+	$(DOBJ)wenoof_interpolator_js.o \
+	$(DOBJ)wenoof_reconstructor_js.o \
+	$(DOBJ)wenoof_weights_object.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_interpolations_factory.o: src/WenOOF/factories/wenoof_interpolations_factory.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_interpolations_object.o \
+	$(DOBJ)wenoof_interpolations_rec_js.o \
+	$(DOBJ)wenoof_interpolations_int_js.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_objects_factory.o: src/WenOOF/factories/wenoof_objects_factory.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_alpha_factory.o \
+	$(DOBJ)wenoof_alpha_object.o \
+	$(DOBJ)wenoof_beta_factory.o \
+	$(DOBJ)wenoof_beta_object.o \
+	$(DOBJ)wenoof_kappa_factory.o \
+	$(DOBJ)wenoof_kappa_object.o \
+	$(DOBJ)wenoof_interpolations_factory.o \
+	$(DOBJ)wenoof_interpolations_object.o \
+	$(DOBJ)wenoof_interpolator_factory.o \
+	$(DOBJ)wenoof_interpolator_object.o \
+	$(DOBJ)wenoof_weights_factory.o \
+	$(DOBJ)wenoof_weights_object.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_alpha_factory.o: src/WenOOF/factories/wenoof_alpha_factory.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_alpha_object.o \
+	$(DOBJ)wenoof_alpha_int_js.o \
+	$(DOBJ)wenoof_alpha_int_m.o \
+	$(DOBJ)wenoof_alpha_int_z.o \
+	$(DOBJ)wenoof_alpha_rec_js.o \
+	$(DOBJ)wenoof_alpha_rec_m.o \
+	$(DOBJ)wenoof_alpha_rec_z.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)wenoof_beta_factory.o: src/WenOOF/factories/wenoof_beta_factory.f90 \
+	$(DOBJ)penf.o \
+	$(DOBJ)wenoof_beta_object.o \
+	$(DOBJ)wenoof_beta_rec_js.o \
+	$(DOBJ)wenoof_beta_int_js.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)penf.o: src/PENF/penf.F90 \
+	$(DOBJ)penf_global_parameters_variables.o \
+	$(DOBJ)penf_b_size.o \
+	$(DOBJ)penf_stringify.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)penf_global_parameters_variables.o: src/PENF/penf_global_parameters_variables.F90
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)penf_b_size.o: src/PENF/penf_b_size.F90 \
+	$(DOBJ)penf_global_parameters_variables.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+$(DOBJ)penf_stringify.o: src/PENF/penf_stringify.F90 \
+	$(DOBJ)penf_b_size.o \
+	$(DOBJ)penf_global_parameters_variables.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC) $< -o $@
+
+#phony auxiliary rules
+.PHONY : $(MKDIRS)
+$(MKDIRS):
+	@mkdir -p $@
+.PHONY : cleanobj
+cleanobj:
+	@echo deleting objects
+	@rm -fr $(DOBJ)
+.PHONY : cleanmod
+cleanmod:
+	@echo deleting mods
+	@rm -fr $(DMOD)
+.PHONY : clean
+clean: cleanobj cleanmod
