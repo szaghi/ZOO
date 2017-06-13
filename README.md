@@ -19,7 +19,7 @@
 
 ### What is ZOO?
 
-This my *ZOO* where you can see (and take) my *wild Fortran pets*, namely this a centralized place where you can get some of my (poor) Fortran libraries that live in their own repository. The aim is to facilitate end-users that are bothered to deal with my *extreme KISS* approach that atomizes my projects. My Fortran projects are generally KISS (Keep It Simple and Stupid) thus they are designed to complete one or two simple tasks. This approach is wonderful (IMO), but it has cons: the main cons is probably that it generates a **dependency hieararchy**. In fact, to complete one task often I exploit other libraries to complete smaller tasks. For example to handle fancy progress bars I have created [forbear](https://github.com/szaghi/forbear) that, in turn, exploits [FACE](https://github.com/szaghi/FACE) to handle colors and styles: the end-user of `forbear` can be bothered to manually resolve the `FACE` dependency if she decide to perform a manual installation of `forbear`.
+This is my *ZOO* where you can see (and take) my *wild Fortran pets*, namely this is a centralized place where you can get some of my (poor) Fortran libraries that otherwise live in their own repository. The aim is to facilitate end-users that are bothered to deal with my *extreme KISS* approach that atomizes my projects. My Fortran projects are generally strongly KISS (Keep It Simple and Stupid) thus they are designed to complete one or two simple tasks. This approach is wonderful (IMO), but it has cons: the main cons is probably that it generates a **dependency hieararchy**. In fact, to complete one task I often exploit other libraries to complete smaller tasks. For example to handle fancy progress bars I have created [forbear](https://github.com/szaghi/forbear) that, in turn, exploits [FACE](https://github.com/szaghi/FACE) to handle colors and styles: the end-user of `forbear` can be bothered to manually resolve the `FACE` dependency if she decide to perform a manual installation of `forbear`.
 
 > I hope that my **ZOO** will help end-users to easy handle the pre-requisites phase and it will allow a more easy installation of my poor libraries.
 
@@ -54,7 +54,7 @@ A centralized module exposing **all pets** is also provided, i.e. [zoo.f90](http
 
 ##### Note on updates
 
-The ZOO provides always a *recent master* branch version of each library: ZOO is itself updated quite often. Anyhow, local ZOOs can be updated by the end-user by means of the provided `zoo_update.sh` script, see install section for more details.
+The ZOO provides always a *recent master branch version* of each library: ZOO is itself updated quite often. Anyhow, local ZOO clones can be updated by the end-user by means of the provided `zoo_update.sh` script, see install section for more details.
 
 Go to [Top](#top)
 
@@ -76,7 +76,7 @@ You have 2 possibilities:
 
 ###### Plain download the repository
 
-By your browser: [click here](https://github.com/szaghi/ZOO/archive/master.zip)
+By your browser: [click here](https://github.com/szaghi/ZOO/archive/master.zip).
 
 Or from the terminal:
 ```shell
@@ -91,7 +91,7 @@ This *plain* download is straightforward, but you have to repeat it to obtain ne
 
 ###### Clone the repository
 
-If you have `git` it could be more handy to clone the repository thus you can update your local clone to new versions very easily
+If you have `git`, it could be more handy to clone the repository thus you can update your local clone to new versions very easily
 
 ```shell
 git clone https://github.com/szaghi/ZOO
@@ -113,7 +113,7 @@ cd ZOO
 ./zoo_update.sh
 ```
 
-This command will populate the `src` directory with the latest master version of each libraries.
+This command will populate the `src` directory with the latest master version of each library.
 
 #### Build libraries
 
@@ -179,7 +179,7 @@ FoBiS.py build -mode [static|shared]-gnu -t src/path_to/$library.[F|f]90 -o lib$
 FoBiS.py build -mode static-gnu -t src/BeFoR64/befor64.F90 -o libbefor64.a
 ```
 
-Note that FoBiS allows also shared libraries building, not only static as Make approach.
+Note that FoBiS allows also **shared** libraries building, not only **static** as Make approach.
 
 The compiled libraries are placed in the same tree as the Make approach.
 
@@ -197,7 +197,7 @@ FoBiS.py rule -ex makeall
 FoBiS.py build -mode [static|shared]-gnu-zoo
 ```
 
-This will create the **monster** library `libzoo.[a|so]` that exposes of the *ZOO's Wild Pets*.
+This will create the **monster** library `libzoo.[a|so]` that exposes all the *ZOO's Wild Pets*.
 
 Go to [Top](#top)
 
@@ -207,6 +207,6 @@ Go to [Top](#top)
 
 > Why this project is named **ZOO**?
 
-Aside it being another of my bad acronyms, this is really a ZOO: there is library for simple-stupid task like to colorize terminal output and a library for challenging task like the integration of general non linear ODE. Like a real ZOO, here you can find animals of any size, from *small birds* to *huge elephants*.
+Aside it being another of my bad acronyms, this is really a ZOO: there are libraries for simple-stupid tasks like to colorize terminal output and libraries for challenging tasks like the integration of general non linear ODE. Like a real ZOO, here you can find animals of any size, from *small birds* to *huge elephants*.
 
 Go to [Top](#top)
