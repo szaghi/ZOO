@@ -68,12 +68,73 @@ Go to [Top](#top)
 
 ### Install ZOO pets
 
-To be written.
+| [Download](#download) | [Update libraries](#update_libraries) | [Build libraries](#build_libraries) |
 
-#### Compiler Support
+#### Download
+
+You have 2 possibilities:
+
+###### Plain download the repository
+
+By your browser: [click here](https://github.com/szaghi/ZOO/archive/master.zip)
+
+Or from the terminal:
+```shell
+# by wget
+wget https://github.com/szaghi/ZOO/archive/master.zip
+# by curl
+curl https://github.com/szaghi/ZOO/archive/master.zip
+# or by whatever you like...
+```
+
+This *plain* download is straightforward, but you have to repeat it to obtain new releases.
+
+###### Clone the repository
+
+If you `git` it could be more handy to clone the repository thus you can update your local clone to new versions very easily
+
+```shell
+git clone https://github.com/szaghi/ZOO
+```
+
+Then, when you need to update your local clone to a new version, simply do
+
+```shell
+cd ZOO
+git pull
+```
+
+#### Update libraries
+
+If you have downloaded the ZOO (by means of any methods) you have the possibility to update the libraries to the last master version without waiting for a ZOO update. To update your local ZOO simply do
+
+```shell
+cd ZOO
+./zoo_update.sh
+```
+
+This command will populate the `src` directory with the latest master version of each libraries.
+
+#### Build libraries
+
+##### Compiler Support
 
 [![Compiler](https://img.shields.io/badge/GNU-v6.3.1+-brightgreen.svg)]()
 
 The main compiler used to develop this Fortran libraries collection is GNU Fortran compiler. In particular, supported versions are v6.3.1 or higher (preferable 7+).
+
+##### Build a library
+
+To be written.
+
+##### Build all library
+
+To be written.
+
+##### Build ZOO library
+
+> One ring to rule them all.
+
+To be completed.
 
 Go to [Top](#top)
