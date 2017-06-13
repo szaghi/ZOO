@@ -136,3 +136,11 @@ To be written.
 To be completed.
 
 Go to [Top](#top)
+
+---
+
+### FAQ
+
+> Why this project is named **ZOO**?
+
+Aside it being another of my bad acronyms, this is really a ZOO: there is library for simple-stupid task like to colorize terminal output and a library for challenging task like the integration of general non linear ODE. Like a real ZOO, here you can find animals of any size, from *small birds* to *huge elephants*.
