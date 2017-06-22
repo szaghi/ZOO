@@ -82,11 +82,18 @@ use stringifor, only : CK,                                                      
                        string,                                                            &
                        adjustl, adjustr, count, index, len, len_trim, repeat, scan, trim, &
                        read_file, read_lines, write_file, write_lines
-use vecfor, only : ex, ey, ez                , &
-                   sq_norm                   , &
-                   normL2                    , &
-                   normalize                 , &
-                   face_normal3, face_normal4, &
+use vecfor, only : distance_to_line,            &
+                   distance_to_plane,           &
+                   distance_vectorial_to_plane, &
+                   ex, ey, ez,                  &
+                   face_normal3, face_normal4,  &
+                   iolen,                       &
+                   is_collinear,                &
+                   is_concyclic,                &
+                   normalized,                  &
+                   normL2,                      &
+                   projection_onto_plane,       &
+                   sq_norm,                     &
                    vector
 use vtk_fortran, only : pvtk_file, vtk_file, vtm_file
 use foodie, only : foodie_integrator_class_names,          &
@@ -211,11 +218,18 @@ public :: string
 public :: adjustl, adjustr, count, index, len, len_trim, repeat, scan, trim
 public :: read_file, read_lines, write_file, write_lines
 ! VecFor
+public :: distance_to_line
+public :: distance_to_plane
+public :: distance_vectorial_to_plane
 public :: ex, ey, ez
-public :: sq_norm
-public :: normL2
-public :: normalize
 public :: face_normal3, face_normal4
+public :: iolen
+public :: is_collinear
+public :: is_concyclic
+public :: normalized
+public :: normL2
+public :: projection_onto_plane
+public :: sq_norm
 public :: vector
 ! VTKFortran
 public :: pvtk_file

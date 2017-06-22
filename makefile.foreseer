@@ -26,107 +26,84 @@ $(LIB): $(MKDIRS) $(DOBJ)$(LIB).o
 
 #compiling rules
 $(DOBJ)foreseer_riemann_solver_compressible_exact.o: src/FORESEER/foreseer_riemann_solver_compressible_exact.F90 \
-	$(DOBJ)flow_conservative_compressible.o \
-	$(DOBJ)flow_conservative_object.o \
-	$(DOBJ)flow_eos_object.o \
+	$(DEXE)libflow.a \
 	$(DOBJ)foreseer_riemann_pattern_compressible_pvl.o \
 	$(DOBJ)foreseer_riemann_solver_object.o \
-	$(DOBJ)penf.o \
-	$(DOBJ)vecfor.o
+	$(DEXE)libpenf.a \
+	$(DEXE)libvecfor.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)foreseer_riemann_solver_compressible_llf.o: src/FORESEER/foreseer_riemann_solver_compressible_llf.F90 \
-	$(DOBJ)flow_conservative_compressible.o \
-	$(DOBJ)flow_conservative_object.o \
-	$(DOBJ)flow_eos_object.o \
+	$(DEXE)libflow.a \
 	$(DOBJ)foreseer_riemann_pattern_compressible_pvl.o \
 	$(DOBJ)foreseer_riemann_solver_object.o \
-	$(DOBJ)penf.o \
-	$(DOBJ)vecfor.o
+	$(DEXE)libpenf.a \
+	$(DEXE)libvecfor.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)foreseer_riemann_solver_compressible_pvl.o: src/FORESEER/foreseer_riemann_solver_compressible_pvl.f90 \
-	$(DOBJ)flow_conservative_compressible.o \
-	$(DOBJ)flow_conservative_object.o \
-	$(DOBJ)flow_eos_object.o \
+	$(DEXE)libflow.a \
 	$(DOBJ)foreseer_riemann_pattern_compressible_pvl.o \
 	$(DOBJ)foreseer_riemann_solver_object.o \
-	$(DOBJ)penf.o \
-	$(DOBJ)vecfor.o
+	$(DEXE)libpenf.a \
+	$(DEXE)libvecfor.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)foreseer_riemann_solver_compressible_roe.o: src/FORESEER/foreseer_riemann_solver_compressible_roe.F90 \
-	$(DOBJ)flow_conservative_compressible.o \
-	$(DOBJ)flow_conservative_object.o \
-	$(DOBJ)flow_eos_compressible.o \
-	$(DOBJ)flow_eos_object.o \
+	$(DEXE)libflow.a \
 	$(DOBJ)foreseer_riemann_pattern_compressible_pvl.o \
 	$(DOBJ)foreseer_riemann_pattern_compressible_roe.o \
 	$(DOBJ)foreseer_riemann_solver_object.o \
-	$(DOBJ)penf.o \
-	$(DOBJ)vecfor.o
+	$(DEXE)libpenf.a \
+	$(DEXE)libvecfor.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)foreseer_riemann_pattern_compressible_pvl.o: src/FORESEER/foreseer_riemann_pattern_compressible_pvl.f90 \
-	$(DOBJ)flow_conservative_object.o \
-	$(DOBJ)flow_eos_object.o \
+	$(DEXE)libflow.a \
 	$(DOBJ)foreseer_riemann_pattern_compressible_object.o \
-	$(DOBJ)penf.o \
-	$(DOBJ)vecfor.o
+	$(DEXE)libpenf.a \
+	$(DEXE)libvecfor.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)foreseer_riemann_solver_object.o: src/FORESEER/foreseer_riemann_solver_object.f90 \
-	$(DOBJ)flow_conservative_object.o \
-	$(DOBJ)flow_eos_object.o \
-	$(DOBJ)penf.o \
-	$(DOBJ)vecfor.o
+	$(DEXE)libflow.a \
+	$(DEXE)libpenf.a \
+	$(DEXE)libvecfor.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)foreseer_riemann_pattern_compressible_object.o: src/FORESEER/foreseer_riemann_pattern_compressible_object.f90 \
-	$(DOBJ)flow_conservative_compressible.o \
-	$(DOBJ)flow_conservative_object.o \
-	$(DOBJ)flow_eos_compressible.o \
-	$(DOBJ)flow_eos_object.o \
+	$(DEXE)libflow.a \
 	$(DOBJ)foreseer_riemann_pattern_object.o \
-	$(DOBJ)penf.o \
-	$(DOBJ)vecfor.o
+	$(DEXE)libpenf.a \
+	$(DEXE)libvecfor.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)foreseer_riemann_pattern_compressible_roe.o: src/FORESEER/foreseer_riemann_pattern_compressible_roe.f90 \
-	$(DOBJ)flow_conservative_object.o \
-	$(DOBJ)flow_eos_object.o \
+	$(DEXE)libflow.a \
 	$(DOBJ)foreseer_riemann_pattern_compressible_object.o \
-	$(DOBJ)penf.o \
-	$(DOBJ)vecfor.o
+	$(DEXE)libpenf.a \
+	$(DEXE)libvecfor.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)foreseer_riemann_solver_compressible_hllc.o: src/FORESEER/foreseer_riemann_solver_compressible_hllc.F90 \
-	$(DOBJ)flow_conservative_compressible.o \
-	$(DOBJ)flow_conservative_object.o \
-	$(DOBJ)flow_eos_object.o \
+	$(DEXE)libflow.a \
 	$(DOBJ)foreseer_riemann_pattern_compressible_pvl.o \
 	$(DOBJ)foreseer_riemann_solver_object.o \
-	$(DOBJ)penf.o \
-	$(DOBJ)vecfor.o
+	$(DEXE)libpenf.a \
+	$(DEXE)libvecfor.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)foreseer.o: src/FORESEER/foreseer.f90 \
-	$(DOBJ)flow_compressible_transformations.o \
-	$(DOBJ)flow_conservative_compressible.o \
-	$(DOBJ)flow_conservative_object.o \
-	$(DOBJ)flow_eos_compressible.o \
-	$(DOBJ)flow_eos_object.o \
-	$(DOBJ)flow_primitive_compressible.o \
-	$(DOBJ)flow_primitive_object.o \
+	$(DEXE)libflow.a \
 	$(DOBJ)foreseer_riemann_pattern_compressible_object.o \
 	$(DOBJ)foreseer_riemann_pattern_compressible_pvl.o \
 	$(DOBJ)foreseer_riemann_pattern_object.o \
@@ -140,117 +117,21 @@ $(DOBJ)foreseer.o: src/FORESEER/foreseer.f90 \
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)foreseer_riemann_pattern_object.o: src/FORESEER/foreseer_riemann_pattern_object.f90 \
-	$(DOBJ)flow_conservative_object.o \
-	$(DOBJ)flow_eos_object.o \
-	$(DOBJ)vecfor.o
+	$(DEXE)libflow.a \
+	$(DEXE)libvecfor.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
-$(DOBJ)penf.o: src/PENF/penf.F90 \
-	$(DOBJ)penf_global_parameters_variables.o \
-	$(DOBJ)penf_b_size.o \
-	$(DOBJ)penf_stringify.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
+.NOTPARALLEL: $(DEXE)libflow.a $(DEXE)libpenf.a $(DEXE)libvecfor.a
 
-$(DOBJ)penf_global_parameters_variables.o: src/PENF/penf_global_parameters_variables.F90
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
+$(DEXE)libflow.a:
+	@$(MAKE) -f makefile.flow
 
-$(DOBJ)penf_b_size.o: src/PENF/penf_b_size.F90 \
-	$(DOBJ)penf_global_parameters_variables.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
+$(DEXE)libpenf.a:
+	@$(MAKE) -f makefile.penf
 
-$(DOBJ)penf_stringify.o: src/PENF/penf_stringify.F90 \
-	$(DOBJ)penf_b_size.o \
-	$(DOBJ)penf_global_parameters_variables.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)flow_primitive_compressible_multispecie.o: src/FLOw/flow_primitive_compressible_multispecie.f90 \
-	$(DOBJ)flow_eos_object.o \
-	$(DOBJ)flow_field_object.o \
-	$(DOBJ)flow_primitive_object.o \
-	$(DOBJ)penf.o \
-	$(DOBJ)vecfor.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)flow_field_object.o: src/FLOw/flow_field_object.f90 \
-	$(DOBJ)penf.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)flow_conservative_compressible.o: src/FLOw/flow_conservative_compressible.f90 \
-	$(DOBJ)flow_eos_object.o \
-	$(DOBJ)flow_field_object.o \
-	$(DOBJ)flow_conservative_object.o \
-	$(DOBJ)penf.o \
-	$(DOBJ)vecfor.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)flow_primitive_object.o: src/FLOw/flow_primitive_object.f90 \
-	$(DOBJ)flow_eos_object.o \
-	$(DOBJ)flow_field_object.o \
-	$(DOBJ)penf.o \
-	$(DOBJ)vecfor.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)flow_eos_compressible.o: src/FLOw/flow_eos_compressible.f90 \
-	$(DOBJ)flow_eos_object.o \
-	$(DOBJ)penf.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)flow_primitive_compressible.o: src/FLOw/flow_primitive_compressible.f90 \
-	$(DOBJ)flow_eos_object.o \
-	$(DOBJ)flow_field_object.o \
-	$(DOBJ)flow_primitive_object.o \
-	$(DOBJ)penf.o \
-	$(DOBJ)vecfor.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)flow_compressible_transformations.o: src/FLOw/flow_compressible_transformations.f90 \
-	$(DOBJ)flow_conservative_compressible.o \
-	$(DOBJ)flow_eos_object.o \
-	$(DOBJ)flow_primitive_compressible.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)flow_conservative_object.o: src/FLOw/flow_conservative_object.f90 \
-	$(DOBJ)flow_eos_object.o \
-	$(DOBJ)flow_field_object.o \
-	$(DOBJ)penf.o \
-	$(DOBJ)vecfor.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)flow.o: src/FLOw/flow.f90 \
-	$(DOBJ)flow_compressible_transformations.o \
-	$(DOBJ)flow_conservative_compressible.o \
-	$(DOBJ)flow_conservative_object.o \
-	$(DOBJ)flow_eos_compressible.o \
-	$(DOBJ)flow_eos_object.o \
-	$(DOBJ)flow_field_object.o \
-	$(DOBJ)flow_primitive_compressible.o \
-	$(DOBJ)flow_primitive_compressible_multispecie.o \
-	$(DOBJ)flow_primitive_object.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)flow_eos_object.o: src/FLOw/flow_eos_object.f90 \
-	$(DOBJ)penf.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)vecfor.o: src/VecFor/vecfor.F90 \
-	$(DOBJ)penf.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
+$(DEXE)libvecfor.a:
+	@$(MAKE) -f makefile.vecfor
 
 #phony auxiliary rules
 .PHONY : $(MKDIRS)

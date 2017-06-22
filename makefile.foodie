@@ -30,7 +30,7 @@ $(DOBJ)foodie_integrator_backward_differentiation_formula.o: src/FOODIE/foodie_i
 	$(DOBJ)foodie_integrand_object.o \
 	$(DOBJ)foodie_integrator_multistep_object.o \
 	$(DOBJ)foodie_integrator_object.o \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
@@ -39,12 +39,12 @@ $(DOBJ)foodie_integrator_lmm_ssp.o: src/FOODIE/foodie_integrator_lmm_ssp.f90 \
 	$(DOBJ)foodie_integrand_object.o \
 	$(DOBJ)foodie_integrator_multistep_object.o \
 	$(DOBJ)foodie_integrator_object.o \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)foodie_error_codes.o: src/FOODIE/foodie_error_codes.f90 \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
@@ -53,7 +53,7 @@ $(DOBJ)foodie_integrator_runge_kutta_ssp.o: src/FOODIE/foodie_integrator_runge_k
 	$(DOBJ)foodie_integrand_object.o \
 	$(DOBJ)foodie_integrator_multistage_object.o \
 	$(DOBJ)foodie_integrator_object.o \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
@@ -62,14 +62,14 @@ $(DOBJ)foodie_integrator_euler_explicit.o: src/FOODIE/foodie_integrator_euler_ex
 	$(DOBJ)foodie_integrand_object.o \
 	$(DOBJ)foodie_integrator_multistage_object.o \
 	$(DOBJ)foodie_integrator_object.o \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)foodie_integrator_multistage_object.o: src/FOODIE/foodie_integrator_multistage_object.f90 \
 	$(DOBJ)foodie_integrand_object.o \
 	$(DOBJ)foodie_integrator_object.o \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
@@ -78,7 +78,7 @@ $(DOBJ)foodie_integrator_leapfrog.o: src/FOODIE/foodie_integrator_leapfrog.f90 \
 	$(DOBJ)foodie_integrand_object.o \
 	$(DOBJ)foodie_integrator_multistep_object.o \
 	$(DOBJ)foodie_integrator_object.o \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
@@ -87,7 +87,7 @@ $(DOBJ)foodie_integrator_adams_bashforth.o: src/FOODIE/foodie_integrator_adams_b
 	$(DOBJ)foodie_integrand_object.o \
 	$(DOBJ)foodie_integrator_multistep_object.o \
 	$(DOBJ)foodie_integrator_object.o \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
@@ -96,24 +96,24 @@ $(DOBJ)foodie_integrator_runge_kutta_embedded.o: src/FOODIE/foodie_integrator_ru
 	$(DOBJ)foodie_integrand_object.o \
 	$(DOBJ)foodie_integrator_multistage_object.o \
 	$(DOBJ)foodie_integrator_object.o \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)foodie_integrator_multistage_multistep_object.o: src/FOODIE/foodie_integrator_multistage_multistep_object.f90 \
 	$(DOBJ)foodie_integrand_object.o \
 	$(DOBJ)foodie_integrator_object.o \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)foodie_integrator_object.o: src/FOODIE/foodie_integrator_object.f90 \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)foodie_utils.o: src/FOODIE/foodie_utils.f90 \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
@@ -122,7 +122,7 @@ $(DOBJ)foodie_integrator_adams_moulton.o: src/FOODIE/foodie_integrator_adams_mou
 	$(DOBJ)foodie_integrand_object.o \
 	$(DOBJ)foodie_integrator_multistep_object.o \
 	$(DOBJ)foodie_integrator_object.o \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
@@ -131,7 +131,7 @@ $(DOBJ)foodie_integrator_ms_runge_kutta_ssp.o: src/FOODIE/foodie_integrator_ms_r
 	$(DOBJ)foodie_integrand_object.o \
 	$(DOBJ)foodie_integrator_multistage_multistep_object.o \
 	$(DOBJ)foodie_integrator_object.o \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
@@ -140,14 +140,14 @@ $(DOBJ)foodie_integrator_lmm_ssp_vss.o: src/FOODIE/foodie_integrator_lmm_ssp_vss
 	$(DOBJ)foodie_integrand_object.o \
 	$(DOBJ)foodie_integrator_multistep_object.o \
 	$(DOBJ)foodie_integrator_object.o \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)foodie_integrator_multistep_object.o: src/FOODIE/foodie_integrator_multistep_object.f90 \
 	$(DOBJ)foodie_integrand_object.o \
 	$(DOBJ)foodie_integrator_object.o \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
@@ -156,7 +156,7 @@ $(DOBJ)foodie_integrator_runge_kutta_lssp.o: src/FOODIE/foodie_integrator_runge_
 	$(DOBJ)foodie_integrand_object.o \
 	$(DOBJ)foodie_integrator_multistage_object.o \
 	$(DOBJ)foodie_integrator_object.o \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
@@ -165,7 +165,7 @@ $(DOBJ)foodie_integrator_runge_kutta_low_storage.o: src/FOODIE/foodie_integrator
 	$(DOBJ)foodie_integrand_object.o \
 	$(DOBJ)foodie_integrator_multistage_object.o \
 	$(DOBJ)foodie_integrator_object.o \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
@@ -189,7 +189,7 @@ $(DOBJ)foodie.o: src/FOODIE/foodie.f90 \
 	$(DOBJ)foodie_integrator_runge_kutta_low_storage.o \
 	$(DOBJ)foodie_integrator_runge_kutta_lssp.o \
 	$(DOBJ)foodie_integrator_runge_kutta_ssp.o \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
@@ -200,36 +200,19 @@ $(DOBJ)foodie_integrator_adams_bashforth_moulton.o: src/FOODIE/foodie_integrator
 	$(DOBJ)foodie_integrator_adams_moulton.o \
 	$(DOBJ)foodie_integrator_multistep_object.o \
 	$(DOBJ)foodie_integrator_object.o \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)foodie_integrand_object.o: src/FOODIE/foodie_integrand_object.f90 \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
-$(DOBJ)penf.o: src/PENF/penf.F90 \
-	$(DOBJ)penf_global_parameters_variables.o \
-	$(DOBJ)penf_b_size.o \
-	$(DOBJ)penf_stringify.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
+.NOTPARALLEL: $(DEXE)libpenf.a
 
-$(DOBJ)penf_global_parameters_variables.o: src/PENF/penf_global_parameters_variables.F90
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)penf_b_size.o: src/PENF/penf_b_size.F90 \
-	$(DOBJ)penf_global_parameters_variables.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)penf_stringify.o: src/PENF/penf_stringify.F90 \
-	$(DOBJ)penf_b_size.o \
-	$(DOBJ)penf_global_parameters_variables.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
+$(DEXE)libpenf.a:
+	@$(MAKE) -f makefile.penf
 
 #phony auxiliary rules
 .PHONY : $(MKDIRS)

@@ -27,13 +27,13 @@ $(LIB): $(MKDIRS) $(DOBJ)$(LIB).o
 #compiling rules
 $(DOBJ)finer_option_t.o: src/FiNeR/finer_option_t.F90 \
 	$(DOBJ)finer_backend.o \
-	$(DOBJ)penf.o \
-	$(DOBJ)stringifor.o
+	$(DEXE)libpenf.a \
+	$(DEXE)libstringifor.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)finer_backend.o: src/FiNeR/finer_backend.f90 \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
@@ -47,63 +47,26 @@ $(DOBJ)finer_file_ini_t.o: src/FiNeR/finer_file_ini_t.f90 \
 	$(DOBJ)finer_backend.o \
 	$(DOBJ)finer_option_t.o \
 	$(DOBJ)finer_section_t.o \
-	$(DOBJ)penf.o \
-	$(DOBJ)stringifor.o
+	$(DEXE)libpenf.a \
+	$(DEXE)libstringifor.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)finer_section_t.o: src/FiNeR/finer_section_t.f90 \
 	$(DOBJ)finer_backend.o \
 	$(DOBJ)finer_option_t.o \
-	$(DOBJ)penf.o \
-	$(DOBJ)stringifor.o
+	$(DEXE)libpenf.a \
+	$(DEXE)libstringifor.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
-$(DOBJ)penf.o: src/PENF/penf.F90 \
-	$(DOBJ)penf_global_parameters_variables.o \
-	$(DOBJ)penf_b_size.o \
-	$(DOBJ)penf_stringify.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
+.NOTPARALLEL: $(DEXE)libpenf.a $(DEXE)libstringifor.a
 
-$(DOBJ)penf_global_parameters_variables.o: src/PENF/penf_global_parameters_variables.F90
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
+$(DEXE)libpenf.a:
+	@$(MAKE) -f makefile.penf
 
-$(DOBJ)penf_b_size.o: src/PENF/penf_b_size.F90 \
-	$(DOBJ)penf_global_parameters_variables.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)penf_stringify.o: src/PENF/penf_stringify.F90 \
-	$(DOBJ)penf_b_size.o \
-	$(DOBJ)penf_global_parameters_variables.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)stringifor.o: src/StringiFor/stringifor.F90 \
-	$(DOBJ)penf.o \
-	$(DOBJ)stringifor_string_t.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)stringifor_string_t.o: src/StringiFor/stringifor_string_t.F90 \
-	$(DOBJ)befor64.o \
-	$(DOBJ)penf.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)befor64_pack_data_m.o: src/BeFoR64/befor64_pack_data_m.F90 \
-	$(DOBJ)penf.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)befor64.o: src/BeFoR64/befor64.F90 \
-	$(DOBJ)penf.o \
-	$(DOBJ)befor64_pack_data_m.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
+$(DEXE)libstringifor.a:
+	@$(MAKE) -f makefile.stringifor
 
 #phony auxiliary rules
 .PHONY : $(MKDIRS)

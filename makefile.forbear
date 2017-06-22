@@ -32,7 +32,7 @@ $(DOBJ)forbear_bar_object.o: src/forbear/forbear_bar_object.F90 \
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)forbear_element_object.o: src/forbear/forbear_element_object.F90 \
-	$(DOBJ)face.o \
+	$(DEXE)libface.a \
 	$(DOBJ)forbear_kinds.o
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
@@ -47,9 +47,10 @@ $(DOBJ)forbear_kinds.o: src/forbear/forbear_kinds.F90
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
-$(DOBJ)face.o: src/FACE/face.F90
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
+.NOTPARALLEL: $(DEXE)libface.a
+
+$(DEXE)libface.a:
+	@$(MAKE) -f makefile.face
 
 #phony auxiliary rules
 .PHONY : $(MKDIRS)

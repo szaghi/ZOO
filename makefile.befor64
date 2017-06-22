@@ -26,37 +26,20 @@ $(LIB): $(MKDIRS) $(DOBJ)$(LIB).o
 
 #compiling rules
 $(DOBJ)befor64_pack_data_m.o: src/BeFoR64/befor64_pack_data_m.F90 \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)befor64.o: src/BeFoR64/befor64.F90 \
-	$(DOBJ)penf.o \
+	$(DEXE)libpenf.a \
 	$(DOBJ)befor64_pack_data_m.o
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
-$(DOBJ)penf.o: src/PENF/penf.F90 \
-	$(DOBJ)penf_global_parameters_variables.o \
-	$(DOBJ)penf_b_size.o \
-	$(DOBJ)penf_stringify.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
+.NOTPARALLEL: $(DEXE)libpenf.a
 
-$(DOBJ)penf_global_parameters_variables.o: src/PENF/penf_global_parameters_variables.F90
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)penf_b_size.o: src/PENF/penf_b_size.F90 \
-	$(DOBJ)penf_global_parameters_variables.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)penf_stringify.o: src/PENF/penf_stringify.F90 \
-	$(DOBJ)penf_b_size.o \
-	$(DOBJ)penf_global_parameters_variables.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
+$(DEXE)libpenf.a:
+	@$(MAKE) -f makefile.penf
 
 #phony auxiliary rules
 .PHONY : $(MKDIRS)

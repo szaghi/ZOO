@@ -39,19 +39,16 @@ function clone () {
    git clone $1/$2.git $DOWNLOADS/$2
 }
 
-function initialize () {
-   # initialize tree structure
-   rm -rf $SRC $DOWNLOADS
-   mkdir -p $DOWNLOADS
-}
-
 function mv_lib () {
    # move library sources
+   rm -rf $SRC/$1
    mkdir -p $SRC/$1
    mv $DOWNLOADS/$1/src/lib/* $SRC/$1/
 }
 
-initialize
+rm -rf $DOWNLOADS
+mkdir -p $DOWNLOADS
+
 for lib in "${ZAGHI_LIBRARIES[@]}"
 do
    echo "update $lib"

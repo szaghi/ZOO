@@ -27,67 +27,30 @@ $(LIB): $(MKDIRS) $(DOBJ)$(LIB).o
 #compiling rules
 $(DOBJ)foxy_xml_file.o: src/FoXy/foxy_xml_file.f90 \
 	$(DOBJ)foxy_xml_tag.o \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)foxy_xml_tag.o: src/FoXy/foxy_xml_tag.f90 \
-	$(DOBJ)penf.o \
-	$(DOBJ)stringifor.o
+	$(DEXE)libpenf.a \
+	$(DEXE)libstringifor.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)foxy.o: src/FoXy/foxy.f90 \
 	$(DOBJ)foxy_xml_file.o \
 	$(DOBJ)foxy_xml_tag.o \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
-$(DOBJ)penf.o: src/PENF/penf.F90 \
-	$(DOBJ)penf_global_parameters_variables.o \
-	$(DOBJ)penf_b_size.o \
-	$(DOBJ)penf_stringify.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
+.NOTPARALLEL: $(DEXE)libpenf.a $(DEXE)libstringifor.a
 
-$(DOBJ)penf_global_parameters_variables.o: src/PENF/penf_global_parameters_variables.F90
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
+$(DEXE)libpenf.a:
+	@$(MAKE) -f makefile.penf
 
-$(DOBJ)penf_b_size.o: src/PENF/penf_b_size.F90 \
-	$(DOBJ)penf_global_parameters_variables.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)penf_stringify.o: src/PENF/penf_stringify.F90 \
-	$(DOBJ)penf_b_size.o \
-	$(DOBJ)penf_global_parameters_variables.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)befor64_pack_data_m.o: src/BeFoR64/befor64_pack_data_m.F90 \
-	$(DOBJ)penf.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)befor64.o: src/BeFoR64/befor64.F90 \
-	$(DOBJ)penf.o \
-	$(DOBJ)befor64_pack_data_m.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)stringifor.o: src/StringiFor/stringifor.F90 \
-	$(DOBJ)penf.o \
-	$(DOBJ)stringifor_string_t.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)stringifor_string_t.o: src/StringiFor/stringifor_string_t.F90 \
-	$(DOBJ)befor64.o \
-	$(DOBJ)penf.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
+$(DEXE)libstringifor.a:
+	@$(MAKE) -f makefile.stringifor
 
 #phony auxiliary rules
 .PHONY : $(MKDIRS)

@@ -29,13 +29,13 @@ $(DOBJ)flow_primitive_compressible_multispecie.o: src/FLOw/flow_primitive_compre
 	$(DOBJ)flow_eos_object.o \
 	$(DOBJ)flow_field_object.o \
 	$(DOBJ)flow_primitive_object.o \
-	$(DOBJ)penf.o \
-	$(DOBJ)vecfor.o
+	$(DEXE)libpenf.a \
+	$(DEXE)libvecfor.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)flow_field_object.o: src/FLOw/flow_field_object.f90 \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
@@ -43,22 +43,22 @@ $(DOBJ)flow_conservative_compressible.o: src/FLOw/flow_conservative_compressible
 	$(DOBJ)flow_eos_object.o \
 	$(DOBJ)flow_field_object.o \
 	$(DOBJ)flow_conservative_object.o \
-	$(DOBJ)penf.o \
-	$(DOBJ)vecfor.o
+	$(DEXE)libpenf.a \
+	$(DEXE)libvecfor.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)flow_primitive_object.o: src/FLOw/flow_primitive_object.f90 \
 	$(DOBJ)flow_eos_object.o \
 	$(DOBJ)flow_field_object.o \
-	$(DOBJ)penf.o \
-	$(DOBJ)vecfor.o
+	$(DEXE)libpenf.a \
+	$(DEXE)libvecfor.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)flow_eos_compressible.o: src/FLOw/flow_eos_compressible.f90 \
 	$(DOBJ)flow_eos_object.o \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
@@ -66,8 +66,8 @@ $(DOBJ)flow_primitive_compressible.o: src/FLOw/flow_primitive_compressible.f90 \
 	$(DOBJ)flow_eos_object.o \
 	$(DOBJ)flow_field_object.o \
 	$(DOBJ)flow_primitive_object.o \
-	$(DOBJ)penf.o \
-	$(DOBJ)vecfor.o
+	$(DEXE)libpenf.a \
+	$(DEXE)libvecfor.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
@@ -81,8 +81,8 @@ $(DOBJ)flow_compressible_transformations.o: src/FLOw/flow_compressible_transform
 $(DOBJ)flow_conservative_object.o: src/FLOw/flow_conservative_object.f90 \
 	$(DOBJ)flow_eos_object.o \
 	$(DOBJ)flow_field_object.o \
-	$(DOBJ)penf.o \
-	$(DOBJ)vecfor.o
+	$(DEXE)libpenf.a \
+	$(DEXE)libvecfor.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
@@ -100,36 +100,17 @@ $(DOBJ)flow.o: src/FLOw/flow.f90 \
 	@$(FC) $(OPTSC) $< -o $@
 
 $(DOBJ)flow_eos_object.o: src/FLOw/flow_eos_object.f90 \
-	$(DOBJ)penf.o
+	$(DEXE)libpenf.a
 	@echo $(COTEXT)
 	@$(FC) $(OPTSC) $< -o $@
 
-$(DOBJ)penf.o: src/PENF/penf.F90 \
-	$(DOBJ)penf_global_parameters_variables.o \
-	$(DOBJ)penf_b_size.o \
-	$(DOBJ)penf_stringify.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
+.NOTPARALLEL: $(DEXE)libpenf.a $(DEXE)libvecfor.a
 
-$(DOBJ)penf_global_parameters_variables.o: src/PENF/penf_global_parameters_variables.F90
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
+$(DEXE)libpenf.a:
+	@$(MAKE) -f makefile.penf
 
-$(DOBJ)penf_b_size.o: src/PENF/penf_b_size.F90 \
-	$(DOBJ)penf_global_parameters_variables.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)penf_stringify.o: src/PENF/penf_stringify.F90 \
-	$(DOBJ)penf_b_size.o \
-	$(DOBJ)penf_global_parameters_variables.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
-
-$(DOBJ)vecfor.o: src/VecFor/vecfor.F90 \
-	$(DOBJ)penf.o
-	@echo $(COTEXT)
-	@$(FC) $(OPTSC) $< -o $@
+$(DEXE)libvecfor.a:
+	@$(MAKE) -f makefile.vecfor
 
 #phony auxiliary rules
 .PHONY : $(MKDIRS)
